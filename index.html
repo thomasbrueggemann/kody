@@ -45,15 +45,15 @@
 
       //// Create ACE
       var editor = ace.edit("firepad-container");
-      editor.setTheme("ace/theme/textmate");
+      editor.setTheme("ace/theme/monokai");
       var session = editor.getSession();
       session.setUseWrapMode(true);
       session.setUseWorker(false);
-      session.setMode("ace/mode/javascript");
+      session.setMode("ace/mode/csharp");
 
       //// Create Firepad.
       var firepad = Firepad.fromACE(firepadRef, editor, {
-        defaultText: '// JavaScript Editing with Firepad!\nfunction go() {\n  var message = "Hello, world.";\n  console.log(message);\n}'
+        defaultText: "// Let's write some code!"
       });
     }
 
