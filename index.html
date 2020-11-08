@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-  <title>KODY | Online code sharing</title>
+  <title>KODY | Online Code Sharing</title>
   <meta charset="utf-8" />
   <script src="https://www.gstatic.com/firebasejs/5.5.4/firebase.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.5/ace.js"></script>
@@ -12,6 +12,11 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
   <link rel="stylesheet" href="https://firepad.io/releases/v1.5.9/firepad.css" />
   <script src="https://firepad.io/releases/v1.5.9/firepad.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.6.1/randomColor.min.js" integrity="sha512-vPeZ7JCboHcfpqSx5ZD+/jpEhS4JpXxfz9orSvAPPj0EKUVShU2tgy7XkU+oujBJKnWmu4hU7r9MMQNWPfXsYw==" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+
+  <script src="meta.js"></script>
+  <script src="main.js"></script>
 
   <style>
     html { height: 100%; }
@@ -31,6 +36,10 @@
 		padding: 0 8px;
 	}
 
+	.navbar-brand {
+		font-size: 1.4em;
+	}
+
 	.navbar-select-label {
 		margin-right: 10px;
 		font-weight: bold;
@@ -47,8 +56,8 @@
 	<section class="container is-fluid">
 		<nav class="navbar has-background-light" role="navigation" aria-label="main navigation">
 			<div class="navbar-brand">
-			  <a class="navbar-item" href="https://kody.js.org">
-				KODY
+			  <a class="navbar-item has-text-info" href="https://kody.js.org">
+				K<i class="fas fa-code"></i>DY
 			  </a>
 		  
 			  <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -64,14 +73,18 @@
 					<div class="navbar-item">
 						<div class="navbar-select-label">Syntax:</div>
 						<div class="select">
-							<select id="modesList"></select>
+							<select id="modesList">
+								<option value="" disabled selected>Select syntax...</option>
+							</select>
 						</div>
 					</div>
 
 					<div class="navbar-item">
 						<div class="navbar-select-label">Theme:</div>
 						<div class="select">
-							<select id="themeList"></select>
+							<select id="themeList">
+								<option value="" disabled selected>Select theme...</option>
+							</select>
 						</div>
 					</div>
 			  </div>
@@ -79,7 +92,7 @@
 			  <div class="navbar-end">
 				<div class="navbar-item">
 				  <div class="buttons">
-					<a class="button is-primary">
+					<a class="button is-info">
 					  <strong>Share</strong>
 					</a>
 				  </div>
@@ -90,73 +103,5 @@
 	</section>
 
 	<div id="firepad-container"></div>
-
-  <script>
-    function init() {
-      // Initialize Firebase.
-      var config = {
-        apiKey: "AIzaSyBryJ-i-Q-ogDQeEjEbQGowRxjWCIzDDKg",
-        authDomain: "kody-dd8ab.firebaseapp.com",
-        databaseURL: "https://kody-dd8ab.firebaseio.com"
-      };
-      firebase.initializeApp(config);
-
-      // Get Firebase Database reference.
-      var firepadRef = getExampleRef();
-
-      // Create ACE
-      var editor = ace.edit("firepad-container");
-      editor.setTheme("ace/theme/monokai");
-	  editor.setOptions({
-		fontSize: "11pt"
-	  });
-
-      var session = editor.getSession();
-      session.setUseWrapMode(true);
-      session.setUseWorker(false);
-      session.setMode("ace/mode/csharp");
-
-	  // Load mode list
-	  var modelist = ace.require("ace/ext/modelist");
-	  modelist.modes.map(function(mode) {
-		var modeOpt = document.createElement("option");
-		modeOpt.innerText = mode.caption;
-		modeOpt.value = mode.name;
-
-		document.getElementById("modesList").appendChild(modeOpt);
-	  });
-
-	  // Load theme list
-	  var themelist = ace.require("ace/ext/themelist");
-	  themelist.themes.map(function(theme) {
-		var themeOpt = document.createElement("option");
-		themeOpt.innerText = theme.caption;
-		themeOpt.value = theme.name;
-
-		document.getElementById("themeList").appendChild(themeOpt);
-	  });
-
-      // Create Firepad.
-      var firepad = Firepad.fromACE(firepadRef, editor, {
-        defaultText: "// Let's write some code!"
-      });
-    }
-
-    // Helper to get hash from end of URL or generate a random one.
-    function getExampleRef() {
-      var ref = firebase.database().ref();
-      var hash = window.location.hash.replace(/#/g, '');
-      if (hash) {
-        ref = ref.child(hash);
-      } else {
-        ref = ref.push(); // generate unique location.
-        window.location = window.location + '#' + ref.key; // add it as a hash to the URL.
-      }
-      if (typeof console !== 'undefined') {
-        console.log('Data: ', ref.toString());
-      }
-      return ref;
-    }
-  </script>
 </body>
 </html>
