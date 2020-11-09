@@ -15,9 +15,6 @@ function init() {
 
 	// Create ACE
 	var editor = ace.edit("firepad-container");
-	editor.setOptions({
-	  fontSize: "11pt"
-	});
 
 	var session = editor.getSession();
 	session.setUseWrapMode(true);
@@ -72,6 +69,18 @@ function init() {
 
 	firepad.setUserId(user.id);
 	firepad.setUserColor(user.color);
+
+	window.onfocus = function () {
+		firepad.setUserColor(user.color);
+	}; 
+
+	window.onblur = function () {
+		firepad.setUserColor("#CCC");
+	}; 
+
+	onUsers(firepadRef, function(users) {
+		updateUserList(users);
+	})
   }
 
   // Helper to get hash from end of URL or generate a random one.

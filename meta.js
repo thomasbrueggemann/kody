@@ -14,6 +14,32 @@ function onMeta(ref, key, callback) {
 	});
 }
 
+function onUsers(ref, callback) {
+	ref.child("users").on("value", function(snapshot) {
+		return callback(snapshot.val());
+	});
+}
+
+function updateUserList(users) {
+	var userList = document.getElementById("userList");
+	
+	// remove all children of the list
+	while (userList.firstChild) userList.removeChild(userList.firstChild);
+
+	for(var userId in users) {
+
+		var userColor = users[userId].color;
+		var userName = userId.split("___")[0];
+
+		var userElem = document.createElement("span");
+		userElem.className = "tag is-black user-tag";
+		userElem.setAttribute("style", "background-color:" + userColor + "!important;");
+		userElem.innerText = userName;
+
+		userList.appendChild(userElem);
+	}
+}
+
 function assembleUserDetails() {
 
 	function uuidv4() {
