@@ -55,7 +55,7 @@
   </style>
 </head>
 
-<body onload="init()">
+<body onload="init()" onpaste="console.log('paste');">
 
 	<section class="container is-fluid">
 		<nav class="navbar has-background-light" role="navigation" aria-label="main navigation">
@@ -93,13 +93,13 @@
 					</div>
 
 					<div class="navbar-item">
-						<div class="navbar-select-label">Users:</div>
+						<div class="navbar-select-label">Online:</div>
 						<div id="userList">
 						</div>
 					</div>
 			  </div>
 		  
-			  <div class="navbar-end">
+			  <!--<div class="navbar-end">
 				<div class="navbar-item">
 				  <div class="buttons">
 					<a class="button is-info">
@@ -107,7 +107,7 @@
 					</a>
 				  </div>
 				</div>
-			  </div>
+			  </div>-->
 			</div>
 		  </nav>
 	</section>
